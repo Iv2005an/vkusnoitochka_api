@@ -1,0 +1,14 @@
+name: vkusnoitochka_api
+description: API for receiving data from Vkusnoitochka. The library has a class with static methods for retrieving data.
+version: 1.0.0
+repository: https://github.com/Iv2005an/vkusnoitochka_api
+
+environment:
+  sdk: ^3.2.5
+
+dependencies:
+  dio: ^5.4.0
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
