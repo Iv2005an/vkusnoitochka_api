@@ -22,7 +22,7 @@ void main() async {
       const cityId = '5dfc9fd451f0dc92455bee95';
       const deviceId = '12345678abcdef12';
       final data = VIT.getApiHeaders(cityId: cityId, deviceId: deviceId);
-      expect(data['X-City-ID'], allOf(contains(cityId)));
+      expect(data['X-City-ID'], contains(cityId));
       expect(data['X-Device-ID'], contains(deviceId));
       await saveJson('getApiHeaders(cityId, deviceId)', data);
     });
@@ -52,11 +52,31 @@ void main() async {
       expect(data, isNotEmpty);
       await saveJson('getCities()', data);
     });
+    test('getCities(modifiedTime)', () async {
+      final data = (await VIT.getCities(1714666516)).data;
+      expect(data, isNotEmpty);
+      await saveJson('getCities()', data);
+    });
+    test('getCities(modifiedTimeWithoutChange)', () async {
+      final data = (await VIT.getCities(1714666517)).data;
+      expect(data['items'], isEmpty);
+      await saveJson('getCities(modifiedTimeWithoutChange)', data);
+    });
 
     test('getRestaurants()', () async {
       final data = (await VIT.getRestaurants()).data;
       expect(data, isNotEmpty);
       await saveJson('getRestaurants()', data);
+    });
+    test('getRestaurants(modifiedTime)', () async {
+      final data = (await VIT.getRestaurants(1715460303)).data;
+      expect(data, isNotEmpty);
+      await saveJson('getRestaurants(modifiedTime)', data);
+    });
+    test('getRestaurants(modifiedTimeWithoutChange)', () async {
+      final data = (await VIT.getRestaurants(1715460304)).data;
+      expect(data['items'], isEmpty);
+      await saveJson('getRestaurants(modifiedTimeWithoutChange)', data);
     });
 
     test('getBannersUrl(cityId)', () async {
@@ -109,24 +129,51 @@ void main() async {
           throwsException);
     });
 
+    test('getCatalog()', () async {
+      final data = (await VIT.getCatalog()).data;
+      expect(data, isNotEmpty);
+      await saveJson('getCatalog()', data);
+    });
     test('getCatalog(cityId)', () async {
-      final cityId = '5dfc9fd451f0dc92455bee95';
-      final data = (await VIT.getCatalog(cityId)).data;
+      final data =
+          (await VIT.getCatalog(cityId: '5dfc9fd451f0dc92455bee95')).data;
       expect(data, isNotEmpty);
       await saveJson('getCatalog(cityId)', data);
     });
     test('getCatalog(invalidCityId)', () async {
-      expect(() => VIT.getCatalog('12345678abcdef1234567z'), throwsException);
+      expect(() => VIT.getCatalog(cityId: '12345678abcdef1234567z'),
+          throwsException);
+    });
+    test('getCatalog(modifiedTime)', () async {
+      final data = (await VIT.getCatalog(modifiedTime: 1715435078)).data;
+      expect(data, isNotEmpty);
+      await saveJson('getCatalog(modifiedTime)', data);
+    });
+    test('getCatalog(modifiedTimeWithoutChange)', () async {
+      final data = (await VIT.getCatalog(modifiedTime: 1715435079)).data;
+      expect(data['items'], isEmpty);
+      await saveJson('getCatalog(modifiedTimeWithoutChange)', data);
     });
 
     test('getProducts(cityId)', () async {
-      final cityId = '5dfc9fd451f0dc92455bee95';
-      final data = (await VIT.getProducts(cityId)).data;
+      final data =
+          (await VIT.getProducts(cityId: '5dfc9fd451f0dc92455bee95')).data;
       expect(data, isNotEmpty);
       await saveJson('getProducts(cityId)', data);
     });
     test('getProducts(invalidCityId)', () async {
-      expect(() => VIT.getProducts('12345678abcdef1234567z'), throwsException);
+      expect(() => VIT.getProducts(cityId: '12345678abcdef1234567z'),
+          throwsException);
+    });
+    test('getProducts(modifiedTime)', () async {
+      final data = (await VIT.getProducts(modifiedTime: 1715435374)).data;
+      expect(data, isNotEmpty);
+      await saveJson('getProducts(modifiedTime)', data);
+    });
+    test('getProducts(modifiedTimeWithoutChange)', () async {
+      final data = (await VIT.getProducts(modifiedTime: 1715435375)).data;
+      expect(data['items'], isEmpty);
+      await saveJson('getProducts(modifiedTimeWithoutChange)', data);
     });
 
     test('getPricesUrl(cityId)', () async {
@@ -189,6 +236,19 @@ void main() async {
     });
     test('getDeliveryConfig(invalidCityId)', () async {
       expect(() => VIT.getDeliveryConfig('12345678abcdef1234567z'),
+          throwsException);
+    });
+    test('getDeliveryConfig(cityId, modifiedTime)', () async {
+      final data =
+          (await VIT.getDeliveryConfig('5dfc9fd451f0dc92455bee95', 1715433820))
+              .data;
+      expect(data, isNotEmpty);
+      await saveJson('getDeliveryConfig(modifiedTime)', data);
+    });
+    test('getDeliveryConfig(cityId, modifiedTimeWithoutChange)', () async {
+      expect(
+          () async => await VIT.getDeliveryConfig(
+              '5dfc9fd451f0dc92455bee95', 1715433821),
           throwsException);
     });
 

@@ -45,7 +45,7 @@ class VIT {
 
   /// URL for getting information about the delivery config from Vkusnoitochka
   static const deliveryConfigUrl =
-      'https://mobile-api.vkusnoitochka.ru/api/v1/dff/config?modified=0';
+      'https://mobile-api.vkusnoitochka.ru/api/v1/dff/config';
 
   /// URL for getting information about the order config from Vkusnoitochka
   static const orderConfigUrl =
@@ -106,12 +106,20 @@ class VIT {
       .get(forceUpdateUrl, options: Options(headers: getApiHeaders()));
 
   /// Getting information about cities from Vkusnoitochka
-  static Future<Response> getCities() async => await _httpClient.get(citiesUrl,
-      options: Options(headers: getApiHeaders()));
+  ///
+  /// [modifiedTime] is necessary to get data changed since that time
+  static Future<Response> getCities([int modifiedTime = 0]) async =>
+      await _httpClient.get(citiesUrl,
+          queryParameters: {'modified': modifiedTime},
+          options: Options(headers: getApiHeaders()));
 
   /// Getting information about restaurants from Vkusnoitochka
-  static Future<Response> getRestaurants() async => await _httpClient
-      .get(restaurantsUrl, options: Options(headers: getApiHeaders()));
+  ///
+  /// [modifiedTime] is necessary to get data changed since that time
+  static Future<Response> getRestaurants([int modifiedTime = 0]) async =>
+      await _httpClient.get(restaurantsUrl,
+          queryParameters: {'modified': modifiedTime},
+          options: Options(headers: getApiHeaders()));
 
   /// Getting URL for receive banners from Vkusnoitochka
   ///
@@ -156,8 +164,11 @@ class VIT {
   /// [cityId] is ID of Vkusnoitochka city,
   /// that has the mask "ffffffffffffffffffffffff".
   /// It maybe is empty string if city is unimportant
-  static Future<Response> getCatalog([String cityId = '']) async =>
+  /// [modifiedTime] is necessary to get data changed since that time
+  static Future<Response> getCatalog(
+          {String cityId = '', int modifiedTime = 0}) async =>
       await _httpClient.get(catalogUrl,
+          queryParameters: {'modified': modifiedTime},
           options: Options(headers: getApiHeaders(cityId: cityId)));
 
   /// Getting products from Vkusnoitochka
@@ -165,8 +176,11 @@ class VIT {
   /// [cityId] is ID of Vkusnoitochka city,
   /// that has the mask "ffffffffffffffffffffffff".
   /// It maybe is empty string if city is unimportant
-  static Future<Response> getProducts([String cityId = '']) async =>
+  /// [modifiedTime] is necessary to get data changed since that time
+  static Future<Response> getProducts(
+          {String cityId = '', int modifiedTime = 0}) async =>
       await _httpClient.get(productsUrl,
+          queryParameters: {'modified': modifiedTime},
           options: Options(headers: getApiHeaders(cityId: cityId)));
 
   /// Getting URL for receive prices from Vkusnoitochka
@@ -213,8 +227,11 @@ class VIT {
   ///
   /// [cityId] is ID of Vkusnoitochka city,
   /// that has the mask "ffffffffffffffffffffffff"
-  static Future<Response> getDeliveryConfig(String cityId) async =>
+  /// [modifiedTime] is necessary to get data changed since that time
+  static Future<Response> getDeliveryConfig(String cityId,
+          [int modifiedTime = 0]) async =>
       await _httpClient.get(deliveryConfigUrl,
+          queryParameters: {'modified': modifiedTime},
           options: Options(headers: getApiHeaders(cityId: cityId)));
 
   /// Getting prices from Vkusnoitochka

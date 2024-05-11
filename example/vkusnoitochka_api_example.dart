@@ -6,7 +6,7 @@ void main() async {
   if (vitCityId == null || vitCityId.isEmpty) throw Exception('City not found');
 
   final List<dynamic>? products =
-      (await VIT.getProducts(vitCityId)).data?["items"];
+      (await VIT.getProducts(cityId: vitCityId)).data?["items"];
   if (products == null || products.isEmpty) {
     throw Exception('Products not found');
   }
