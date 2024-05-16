@@ -11,3 +11,6 @@ pubspec.lock
 
 # API data
 api_responses
+
+# MacOS files
+.DS_Store

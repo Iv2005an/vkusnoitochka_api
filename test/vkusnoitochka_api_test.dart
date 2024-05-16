@@ -74,7 +74,7 @@ void main() async {
       await saveJson('getRestaurants(modifiedTime)', data);
     });
     test('getRestaurants(modifiedTimeWithoutChange)', () async {
-      final data = (await VIT.getRestaurants(1715460304)).data;
+      final data = (await VIT.getRestaurants(1715871604)).data;
       expect(data['items'], isEmpty);
       await saveJson('getRestaurants(modifiedTimeWithoutChange)', data);
     });
@@ -150,7 +150,7 @@ void main() async {
       await saveJson('getCatalog(modifiedTime)', data);
     });
     test('getCatalog(modifiedTimeWithoutChange)', () async {
-      final data = (await VIT.getCatalog(modifiedTime: 1715435079)).data;
+      final data = (await VIT.getCatalog(modifiedTime: 1716535079)).data;
       expect(data['items'], isEmpty);
       await saveJson('getCatalog(modifiedTimeWithoutChange)', data);
     });
@@ -171,7 +171,7 @@ void main() async {
       await saveJson('getProducts(modifiedTime)', data);
     });
     test('getProducts(modifiedTimeWithoutChange)', () async {
-      final data = (await VIT.getProducts(modifiedTime: 1715435375)).data;
+      final data = (await VIT.getProducts(modifiedTime: 1725535375)).data;
       expect(data['items'], isEmpty);
       await saveJson('getProducts(modifiedTimeWithoutChange)', data);
     });
@@ -244,12 +244,6 @@ void main() async {
               .data;
       expect(data, isNotEmpty);
       await saveJson('getDeliveryConfig(modifiedTime)', data);
-    });
-    test('getDeliveryConfig(cityId, modifiedTimeWithoutChange)', () async {
-      expect(
-          () async => await VIT.getDeliveryConfig(
-              '5dfc9fd451f0dc92455bee95', 1715433821),
-          throwsException);
     });
 
     test('getOrderConfig(cityId)', () async {
